@@ -1,0 +1,41 @@
+:root { color-scheme: dark; }
+body { margin: 0; background: #15191d; color: #edf2f5; font-family: system-ui, sans-serif; }
+[hidden] { display: none !important; }
+.club { max-width: 930px; margin: auto; padding: 12px; }
+.club h1 { margin: 0; font: 700 clamp(1rem, 4.4vw, 1.5rem)/1.2 system-ui; }
+.club h2 { font-size: 1.4rem; margin: 0 0 7px; }
+.club-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding-bottom: 10px; }
+.club-buttons { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.club button:not(.cell), .club a, .club select {
+  min-height: 40px; border: 1px solid #39464d; border-radius: 7px;
+  background: #252e34; color: #f4f8f9; padding: 6px 10px; font: inherit;
+  font-size: .875rem; cursor: pointer;
+}
+.club button:disabled { opacity: .48; cursor: default; }
+.club a { display: grid; place-content: center; text-decoration: none; }
+.club-lobby { display: grid; gap: 10px; max-width: 470px; margin: 20px auto;
+  padding: 18px; background: #1c2328; border: 1px solid #33434a; border-radius: 12px; }
+.club-lobby label, .club-status small { color: #bac8d0; }
+.club .play { background: #6ddec5; color: #0d2925; font-weight: 700; border-color: transparent; }
+.club-match { display: grid; gap: 9px; max-width: 570px; margin: auto; }
+.club-status { background: #1e292f; border-radius: 8px; padding: 8px 11px; }
+.club-status strong { display: block; }
+.club-status p { margin: 3px 0 0; color: #d7e2e7; font-size: .82rem; }
+.club .board { width: 100%; max-width: none; touch-action: none; user-select: none; }
+.club .cell { touch-action: none; cursor: pointer; }
+.club .cell:has(.figure) { cursor: grab; }
+.club .cell.dark { background-color: #567d79; }
+.club .cell:not(.dark) { background-color: #d7ddca; }
+.club .cell.selected { background-color: #d1b65d; }
+.club .cell.danger { background-color: #d77965; }
+.club .cell.last:not(.selected):not(.danger) { box-shadow: inset 0 0 0 3px #f1cb67b0; }
+.club .cell:focus-visible { outline: 3px solid white; outline-offset: -3px; }
+.match-tools details { margin-top: 9px; background: #1e292f; border-radius: 8px; padding: 9px; }
+.match-tools summary { cursor: pointer; }
+.match-tools #log { max-height: 140px; overflow: auto; }
+@media (orientation: landscape) and (min-width: 630px) {
+  .club-match { max-width: none; grid-template-columns: min(57vw, calc(100dvh - 75px)) minmax(165px, 1fr); align-items: start; }
+  .club-status { grid-column: 2; grid-row: 1; }
+  .club .board { grid-column: 1; grid-row: 1 / span 2; }
+  .match-tools { grid-column: 2; }
+}

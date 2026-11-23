@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Шахматы 2</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="club.css">
+<script defer src="rules.js"></script>
+<script defer src="game.js"></script>
+<script defer src="drag.js"></script>
+<script defer src="club.js"></script>
+<script defer src="club-online.js"></script>
+</head>
+<body>
+<main class="club">
+  <header class="club-header">
+    <h1>Шахматы 2</h1>
+    <div class="club-buttons">
+      <button type="button" id="menu">Меню</button>
+      <button type="button" id="rules">Правила</button>
+    </div>
+  </header>
+  <section class="club-lobby" id="lobby">
+    <h2>Новая партия</h2>
+    <label for="variant">Расстановка</label>
+    <select id="variant">
+      <option value="standard">Шахматы 2</option>
+      <option value="georgy">Пушка Георгия</option>
+    </select>
+    <button class="play" id="local" type="button">Играть на одном экране</button>
+    <button id="online" type="button">Играть онлайн</button>
+    <button id="resume" type="button" hidden>Продолжить партию</button>
+  </section>
+  <section id="match" class="club-match" hidden>
+    <div id="room-info" hidden></div>
+    <div class="club-status" aria-live="polite">
+      <strong id="turn"></strong>
+      <small id="mode-label"></small>
+      <p id="message"></p>
+      <div id="actions"></div>
+    </div>
+    <div id="board" class="board" aria-label="Шахматная доска"></div>
+    <aside class="match-tools">
+      <div class="club-buttons">
+        <button type="button" id="undo">Отменить ход</button>
+        <button type="button" id="restart">Начать заново</button>
+      </div>
+      <details>
+        <summary>Ходы и запас материала</summary>
+        <ol id="log"></ol>
+        <table><thead><tr><th>Сторона</th><th>Мортира</th><th>Джокер</th></tr></thead><tbody id="banks"></tbody></table>
+      </details>
+    </aside>
+  </section>
+</main>
+<dialog id="choice"></dialog>
+<dialog id="online-dialog">
+  <form method="dialog"><button class="quiet-button close" aria-label="Закрыть">×</button></form>
+  <h2>Игра по сети</h2>
+  <p id="online-profile" role="status"></p>
+  <button type="button" class="quiet-button primary" id="create-club-room">Создать комнату</button>
+  <label for="club-room-code">Код комнаты</label>
+  <input id="club-room-code" type="text" maxlength="8" autocomplete="off">
+  <button type="button" class="quiet-button" id="join-club-room">Войти</button>
+</dialog>
+<dialog id="rulebook">
+  <form method="dialog"><button class="quiet-button close" aria-label="Закрыть правила">×</button></form>
+  <h2>Правила игры</h2>
+  <p>Побеждает игрок, поставивший мат. Пат — ничья. Ходы, оставляющие своего короля под шахом, запрещены. Пять повторов позиции или 75 ходов каждой стороны без взятия, хода пешкой либо создания фигуры дают автоматическую ничью. После трёх повторов или 50 таких ходов можно заявить ничью.</p>
+  <h3>Пушка Георгия</h3>
+  <p>В этой расстановке у белых пешки h2–h5, у чёрных a7–a4. Четыре пешки составляют одну колонну. Она целиком идёт на одну клетку вперёд или смещается по диагонали, если её головная пешка берёт фигуру и остальным клеткам хватает места. Колонна распадается после взятия любой её клетки. Если она дошла до последней горизонтали, головная пешка превращается, а остальные отделяются. Отдельные пешки получают способность ставить дым после взятия.</p>
+  <h3>Мортиры</h3>
+  <p>По две на сторону, на месте ладей. Мортира двигается только при обычной рокировке. Выбери мортиру, затем цель. Выстрел занимает ход и снимает вражескую пешку, коня, слона, ладью или ферзя. Цена равна числу шагов короля до цели. Стрелять можно через фигуры. Сначала тратятся очки обычных взятий, затем очки джокера. За выстрел очки не начисляются.</p>
+  <h3>Пешка-ниндзя</h3>
+  <p>Сразу после взятия у пешки есть возможность на следующем ходу своей стороны поставить дым и уйти на любую пустую соседнюю клетку. Дым скрывает фигуры стороны, поставившей завесу, в квадрате 3 × 3 вокруг исходной клетки до конца ответа соперника. Король остаётся видимым. В онлайн-партии во время дыма ходы выбираются без подсветки клеток. Правила перемещения и шаха сохраняются. На последней горизонтали пешка превращается в ферзя, слона или коня. Взятие на проходе работает.</p>
+  <h3>Джокер</h3>
+  <p>Белый начинает на e4, чёрный на d5. Джокер ходит на соседнюю клетку и может брать пешек, коней, слонов, ладей и ферзей обеих сторон. Джокеров и мортиры взять нельзя. Джокер не атакует короля. Выбери джокера и фигуру, чтобы создать её на пустой соседней клетке за один ход.</p>
+  <p>Пешка стоит 1 очко, конь и слон по 3, ладья 5, ферзь 9. В режиме «Свои армии» ладья с исходного угла участвует в рокировке, а пешка может превратиться в ладью. Созданные пешки ставятся на горизонтали 2–7 и сразу ходят на одну клетку вперёд. Обычные взятия приносят очки для мортир, а взятия джокером дают очки, пригодные также для создания фигур.</p>
+</dialog>
+</body>
+</html>
